@@ -4,10 +4,12 @@ import { useSpring, animated } from '@react-spring/web';
 import { v4 as uuidv4 } from 'uuid';
 import { debounce } from 'lodash';
 
+
 interface SendBoxProps {
   onSend: (message: { id: string, type: 'text' | 'image' | 'audio', content: string }) => void;
 }
 
+ const  apiKey =   process.env.GOOGLE_GENERATIVE_AI_API_KEY || '';
 export const SendBox: React.FC<SendBoxProps> = ({ onSend }) => {
   const [text, setText] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -21,15 +23,15 @@ export const SendBox: React.FC<SendBoxProps> = ({ onSend }) => {
   const debouncedSetText = useCallback(
     debounce((value: string) => {
       setText(value);
-    }, 300),
+    }, 10),
     []
   );
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    debouncedSetText(e.target.value);
+   debouncedSetText(e.target.value);
   };
 
-  const handleSend = () => {
+  const handleSend =async () => {
     if (text.trim()) {
       onSend({ id: uuidv4(), type: 'text', content: text });
       setText('');
@@ -52,12 +54,12 @@ export const SendBox: React.FC<SendBoxProps> = ({ onSend }) => {
           onSend({ id: uuidv4(), type: 'image', content: event.target.result as string });
         }
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); 
     }
   };
 
   return (
-    <animated.div style={springProps} className="flex flex-col p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <animated.div style={springProps} className="flex flex-col p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md h-min-1/4     ">
       <textarea
         value={text}
         onChange={handleTextChange}
@@ -72,7 +74,7 @@ export const SendBox: React.FC<SendBoxProps> = ({ onSend }) => {
             onClick={() => fileInputRef.current?.click()}
             className="mr-2 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
           >
-            📷12312sd
+            📷
           </button>
           <input
             type="file"

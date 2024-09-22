@@ -4,6 +4,8 @@ import { SendBox } from './sendBox';
 import { Message } from './message';
 import { streamingChat } from '../app/actions';
 import { CoreMessage } from 'ai';
+import executeConversation from "../app/GoogleAction";
+import Image from 'next/image';
 
 interface ChatMessage {
   id: string;
@@ -41,8 +43,10 @@ export const ChatBlock: React.FC = () => {
         { role: 'user', content: message.content },
       ];
 
-      const response = await streamingChat(chatMessages);
-
+      //const response=await executeConversation(chatMessages);
+      //const response = await streamingChat(chatMessages);/**using Vercel AI SDK */
+      const chatContent = chatMessages.map(msg => msg.content.toString());
+      const response = await executeConversation(chatContent);
       const newBotMessage: ChatMessage = {
         id: Date.now().toString(),
         type: 'text',
@@ -63,13 +67,31 @@ export const ChatBlock: React.FC = () => {
     <div className="flex flex-col h-full w-full max-w-2xl mx-auto">
       <div className="flex-grow overflow-y-auto mb-4 space-y-4">
         {messages.map((msg) => (
-          <Message
-            key={msg.id}
-            type={msg.type === 'image' ? 'animation' : msg.type}
-            content={msg.content}
-            sender={msg.sender}
-            timestamp={msg.timestamp}
-          />
+          <div key={msg.id} className={`flex items-start ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
+            {msg.sender === 'user' ? (
+              <Image
+                src="/user-avatar.png"
+                alt="User Avatar"
+                width={50}
+                height={50}
+                className="rounded-full ml-2"
+              />
+            ) : (
+              <Image
+                src="/bot-avatar.png"
+                alt="Bot Avatar"
+                width={40}
+                height={40}
+                className="rounded-full mr-2"
+              />
+            )}
+            <Message
+              type={msg.type === 'image' ? 'animation' : msg.type}   
+              content={msg.content}
+              sender={msg.sender}
+              timestamp={msg.timestamp}
+            />
+          </div>
         ))}
         {isLoading && (
           <div className="text-center">
