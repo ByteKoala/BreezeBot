@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { SendBox } from './sendBox';
 import { Message } from './message';
 import { streamingChat } from '../app/actions';
@@ -62,7 +62,10 @@ export const ChatBlock: React.FC = () => {
       setIsLoading(false);
     }
   };
-
+  useLayoutEffect(() => {
+    // This will force a re-render after the initial layout
+    setMessages(prevMessages => [...prevMessages]);
+  }, []);
   return (
     <div className="flex flex-col h-full w-full max-w-2xl mx-auto">
       <div className="flex-grow overflow-y-auto mb-4 space-y-4">

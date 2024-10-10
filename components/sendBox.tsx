@@ -60,7 +60,7 @@ export const SendBox: React.FC<SendBoxProps> = ({ onSend }) => {
   };
 
   return (
-    <animated.div style={springProps} className="flex flex-col p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md h-min-1/4    ">
+    <animated.div style={springProps} className="flex flex-col p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md h-min-1/4">
       <textarea
         value={text}
         onChange={handleTextChange}
