@@ -4,7 +4,7 @@ import Image from 'next/image';
 const MarqueeText = () => (
   <div className="bg-transparent text-white p-2 text-center overflow-hidden absolute top-0 left-0 right-0 z-10">
     <p className="animate-marquee whitespace-nowrap inline-block">
-      This program is still under continuous development,try to use it for fun.
+      Hi，I'm Wang,This is An AI-Bot named Breeze.This App is still under continuous development,try to use it for fun.
     </p>
   </div>
 );
