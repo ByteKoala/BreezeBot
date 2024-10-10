@@ -1,10 +1,19 @@
 import { ChatBlock } from "@/components/chatBlock";
 import Image from 'next/image';
 
+const MarqueeText = () => (
+  <div className="bg-transparent text-white p-2 text-center overflow-hidden absolute top-0 left-0 right-0 z-10">
+    <p className="animate-marquee-rtl whitespace-nowrap inline-block">
+      This program is still under continuous development
+    </p>
+  </div>
+);
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <header className="bg-blue-600 text-white p-4 flex items-center">
+      <MarqueeText />
+      <header className="bg-blue-600 text-white p-4 flex items-center relative z-0">
         <Image
           src="/logo.png"
           alt="Breeze Bot Logo"
@@ -20,5 +29,3 @@ export default function Home() {
     </div>
   );
 }
-
-

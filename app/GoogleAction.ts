@@ -28,4 +28,4 @@ async function executeConversation(request: string[]) {
   return aiRes.text();
 }
 
- export default executeConversation;
+ export default executeConversation; 
